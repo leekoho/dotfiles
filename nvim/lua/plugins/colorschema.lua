@@ -35,5 +35,4 @@ return {
       vim.cmd.colorscheme("catppuccin")
     end,
   },
-  -- 其他 UI 插件...
 }
