@@ -2,7 +2,7 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     event = "BufReadPost",
-    dependencies = { 
+    dependencies = {
       "kevinhwang91/promise-async",
       "nvim-treesitter/nvim-treesitter",
       "luukvbaal/statuscol.nvim",

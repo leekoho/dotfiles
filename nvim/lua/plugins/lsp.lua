@@ -1,8 +1,8 @@
 -- LSP
 return {
-  -- LSP 相关插件
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -15,26 +15,31 @@ return {
     config = function()
       -- 配置 Mason
       require("mason").setup()
+       -- gopls Go
+      -- rust_analyzer Rust
+      -- clangd C
+      -- 定义需要安装的 LSP 服务器 
+      local servers = { "pyright", "ts_ls", "volar" }
       require("mason-lspconfig").setup({
         automatic_installation = true,
-        -- gopls Go
-        -- rust_analyzer Rust
-        -- clangd C
-        ensure_installed = { "pyright", "ts_ls" },
+        ensure_installed = servers,
       })
 
       -- 配置 LSP
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- gopls Go
-      -- rust_analyzer Rust
-      -- clangd C
-      local servers = { "pyright", "ts_ls" }
       for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-         capabilities = capabilities,
-        })
+        local config = {
+          capabilities = capabilities,
+        }
+        
+        -- 为 volar 添加特殊配置
+        if server == "volar" then
+          config.filetypes = { "vue" }
+        end
+        
+        lspconfig[server].setup(config)
       end
 
       -- 配置补全引擎

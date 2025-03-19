@@ -7,8 +7,17 @@ return {
       local telescope = require("telescope")
       telescope.setup({
         defaults = {
-         -- 配置默认选项
-	      },
+          file_ignore_patterns = { "node_modules", ".git" },
+          layout_strategy = "horizontal",
+          layout_config = {
+            horizontal = {
+              prompt_position = "top",
+              preview_width = 0.55,
+            },
+          },
+          sorting_strategy = "ascending",
+          winblend = 0,
+        },
       })
     end,
   },
